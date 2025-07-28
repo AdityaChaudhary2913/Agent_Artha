@@ -144,6 +144,10 @@ async def get_financial_data(phone_number, session_id):
 
 financial_data = None
 
+@app.get('/')
+async def root():
+    return {"message": "Welcome to the Artha Financial Insights API."}
+
 """
 {
     "user_id": "1313131313",
