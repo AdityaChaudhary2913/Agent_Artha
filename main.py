@@ -18,16 +18,7 @@ from root_agent import create_root_agent
 logging.basicConfig(level=logging.INFO)
 
 # Initialize Firebase manager with your credentials
-credentials_path = os.getenv(
-    "FIREBASE_CREDENTIALS_PATH",
-    "multiagentfintech-firebase-adminsdk-fbsvc-7864e9d383.json",
-)
-if os.path.exists("/code/app"):  # Deployed environment
-    credentials_path = f"/code/app/{credentials_path}"
-firebase_manager = FirebaseManager(
-    credential_path=credentials_path,
-    database_url="https://multiagentfintech-default-rtdb.asia-southeast1.firebasedatabase.app",  # Replace with your Realtime Database URL
-)
+firebase_manager = FirebaseManager()
 
 # ANSI color codes for terminal output
 class Colors:
@@ -130,14 +121,8 @@ async def call_agent_async(runner, user_id, session_id, query, financial_data = 
         f"\n{Colors.BG_GREEN}{Colors.BLACK}{Colors.BOLD}--- Running Query: {query} ---{Colors.RESET}"
     )
     final_response_text = None
-    agent_name = None
-    
     try:
         async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=content): 
-            # Capture the agent name from the event if available
-            if event.author:
-                agent_name = event.author
-
             response = await process_agent_response(event)
             if response:
                 final_response_text = response
@@ -170,7 +155,7 @@ class FiMCPClient:
     """Exact copy from your working reference"""
 
     def __init__(self, base_url="http://localhost:8080"):
-        self.base_url = "https://artha-mcp-server.onrender.com"
+        self.base_url = os.getenv("FIMCP_BASE_URL", base_url)
         self.session_id = None
         self.authenticated = False
 

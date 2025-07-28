@@ -8,4 +8,5 @@ numpy>=1.24.0
 deprecated
 firebase-admin>=6.5.0
 python-dotenv
-google-cloud-aiplatform[agent_engines,adk]>=1.60.0
+fastapi
+uvicorn
