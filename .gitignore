@@ -1,0 +1,6 @@
+/venv
+/.env
+multiagentfintech-firebase-adminsdk-fbsvc-7864e9d383.json
+my_agent_data.db
+deployed_agent_info.txt
+__pycache__/
