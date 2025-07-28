@@ -15,6 +15,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 app = FastAPI()
 
+google_api_key = os.getenv("GOOGLE_API_KEY")
+if google_api_key is not None:
+    os.environ["GOOGLE_API_KEY"] = google_api_key
+
 # Initialize FirebaseManager
 firebase_manager = FirebaseManager()
 
