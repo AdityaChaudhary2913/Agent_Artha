@@ -103,7 +103,7 @@ class FiMCPClient:
 
 mcp_client = FiMCPClient()
 
-async def process_agent_response(event, firebase_manager=None, user_id=None, session_id=None, chat_key=None):
+async def process_agent_response(event):
     """Process and display agent response events."""
     final_response = None
     if event.is_final_response():
@@ -239,13 +239,7 @@ async def add_message(message: Message):
                                 combined_thinking = "\n".join(accumulated_thinking)
                                 firebase_manager.update_llm_thinking(message.user_id, message.session_id, key, combined_thinking)
                 
-                response = await process_agent_response(
-                    event, 
-                    firebase_manager=firebase_manager, 
-                    user_id=message.user_id, 
-                    session_id=message.session_id, 
-                    chat_key=key
-                )
+                response = await process_agent_response(event)
                 if response:
                     final_response_text = response
 
